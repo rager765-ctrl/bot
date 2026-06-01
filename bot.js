@@ -340,9 +340,20 @@ async function startBotInstance(accountId) {
       clientId: accountId, // Key change: Resolates sessions for multiple accounts
       dataPath: path.join(__dirname, '.wwebjs_auth')
     }),
+    authTimeoutMs: 90000, // Increase auth timeout to 90 seconds (from 45s) for slow container spin-up
+    qrTimeoutMs: 90000,   // Increase QR timeout to 90 seconds
     puppeteer: {
       executablePath: chromePath,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage', // Crucial to prevent crashes due to low shared memory on server containers
+        '--disable-accelerated-2d-canvas',
+        '--no-first-run',
+        '--no-zygote',
+        '--single-process', // Reduces RAM consumption by grouping Chrome processes
+        '--disable-gpu'     // Speeds up headless start by ignoring physical graphic card requirements
+      ]
     }
   });
 
