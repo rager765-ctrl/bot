@@ -348,11 +348,7 @@ async function startBotInstance(accountId) {
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage', // Crucial to prevent crashes due to low shared memory on server containers
-        '--disable-accelerated-2d-canvas',
-        '--no-first-run',
-        '--no-zygote',
-        '--single-process', // Reduces RAM consumption by grouping Chrome processes
-        '--disable-gpu'     // Speeds up headless start by ignoring physical graphic card requirements
+        '--disable-gpu'
       ]
     }
   });
